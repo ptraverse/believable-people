@@ -9,9 +9,18 @@ $(document).ready(function() {
         $.ajax({
             type: 'GET',
             url: '/generate/' + num,
-        }).done(function(response) {
-            $('#result').html('');
-            $('#result').html(response);
+        }).done(function(generateResponse) {
+            console.log(generateResponse);
+            //2nd Javascript API Call to server to get rows
+            $.ajax({
+                type: 'GET',
+                url: '/people',
+            }).done(function(peopleResponse) {
+                console.log(peopleResponse);
+                $('#result').html('');
+                $('#result').append(JSON.stringify(peopleResponse));
+                console.log($('#result').html());
+            });
         });
     });
 });
