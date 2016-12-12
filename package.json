@@ -19,8 +19,11 @@
   },
   "homepage": "https://github.com/ptraverse/believable-people#readme",
   "dependencies": {
+    "async": "^2.1.4",
+    "csvtojson": "^1.0.3",
     "express": "^4.14.0",
     "glob": "^7.1.1",
+    "mocha": "^3.2.0",
     "underscore": "^1.8.3",
     "webpack": "^1.14.0"
   }

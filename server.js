@@ -8,7 +8,7 @@ var g = require('./generate.js');
 
 router.use(express.static(path.resolve(__dirname, './public')));
 
-/** Param Binding **/
+/** Param Binding - so we can have clean routes instead of using ?qStr **/
 router.param('num', function(req, res, next, num) {
     req.num = num;
     next();
