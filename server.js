@@ -16,14 +16,28 @@ router.param('num', function(req, res, next, num) {
 });
 router.get('/generate/:num', function(req, res){
 
-    g.generatePerson(function(err, person) {
-        if (err) {
-            res.json(err);
-        } else {
+    /**
+     * g.generatePeople is not working properly yet
+     */
+    // g.generatePeople(req.num, function(err, people) {
+    //     if (err) {
+    //         res.json(err);
+    //     } else {
+    //         _.each(people, function(person) {
+    //             db.collection('people').insert(person);
+    //         });
+    //         res.json(people.length + ' people inserted!');
+    //     }
+    // });
+
+    numToInsert = req.num;
+    for (var i = 0; i < numToInsert; i++) {
+        g.generatePerson(numToInsert, function(err, person) {
             db.collection('people').insert(person);
-            res.json('Person Inserted!');
-        }
-    });
+        });
+    }
+    res.json(i + ' people inserted!');
+
 });
 
 router.get('/people', function(req, res){

@@ -93,8 +93,9 @@ var _fakeSin = function() {
 
 };
 
-var _generatePerson = function(callback) {
+var _generatePerson = function(n, callback) {
 
+    /** This is occasionally (?!) causing "Write After End" error in nodemon **/
     async.parallel({
         fName: _fakeFirstName,
         lName: _fakeLastName,
@@ -116,6 +117,24 @@ var _generatePerson = function(callback) {
     });
 };
 
+var _generatePeople = function(num, callback) {
+    async.times(num, function(n, next) {
+        _generatePerson(n, function(err, person) {
+            if (err) {
+                console.log(err);
+            } else {
+                next(person);
+            }
+        });
+    }, function(err, people) {
+        if (err) {
+            console.log(err);
+        } else {
+            callback(people);
+        }
+    });
+}
+
 var _getPeople = function(callback) {
     db.collection('people').find().toArray(function(err, result) {
         if (err) {
@@ -128,5 +147,6 @@ var _getPeople = function(callback) {
 
 module.exports = {
     generatePerson: _generatePerson,
+    generatePeople: _generatePeople,
     getPeople: _getPeople
 };
