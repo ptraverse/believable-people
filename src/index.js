@@ -7,12 +7,11 @@ $(document).ready(function() {
 
         //Javascript API Call to server to generate rows
         $.ajax({
-            url: '/generate',
-            data: {
-                'num': num
-            }
-        }).done(function() {
-           console.log('done!');
+            type: 'GET',
+            url: '/generate/' + num,
+        }).done(function(response) {
+            $('#result').html('');
+            $('#result').html(response);
         });
     });
 });
