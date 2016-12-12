@@ -1,0 +1,17 @@
+{
+  "name": "believable-people",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "Philiippe Traverse <philippe.traverse@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/ptraverse/believable-people",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

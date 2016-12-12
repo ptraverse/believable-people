@@ -1,0 +1,27 @@
+{
+  "name": "believable-people",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "nodemon": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack  --watch --config ./webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ptraverse/believable-people.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ptraverse/believable-people/issues"
+  },
+  "homepage": "https://github.com/ptraverse/believable-people#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "glob": "^7.1.1",
+    "underscore": "^1.8.3",
+    "webpack": "^1.14.0"
+  }
+}

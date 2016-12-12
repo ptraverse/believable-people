@@ -1,1 +1,6 @@
 pma/
+bower_components/
+node_modules/
+public/app.js
+yarn.lock
+npm-debug.log
