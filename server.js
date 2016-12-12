@@ -15,7 +15,7 @@ router.param('num', function(req, res, next, num) {
     next();
 });
 router.get('/generate/:num', function(req, res){
-    
+
     g.generatePerson(function(err, person) {
         if (err) {
             res.json(err);
