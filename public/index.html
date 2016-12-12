@@ -1,11 +1,47 @@
 <!DOCTYPE html>
 <html>
     <head>
-       <title>Believable People</title>
+        <title>Believable People</title>
+
+        <!-- CDN SCRIPTS -->
+        <!-- jQuery -->
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!-- underscore -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
+
+        <script src="/app.js"></script>
+
     </head>
     <body>
-        <h1>Believable People</h1>
-        <h4>Under Construction</h4>
-        <a href="https://github.com/ptraverse/believable-people">Browse Repo</a>
+    <form class="container" style="padding-top: 10px;">
+        <div class="row">
+            <div class="col-md-3"><legend>Believable People</legend></div>
+
+            <div class="col-md-2 col-md-offset-5">
+                <select id="numToGenerate" name="numToGenerate" class="form-control">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+
+            <div class="col-md-2" style="text-align: center;">
+                <button id="generate" name="generate" class="btn btn-primary">Generate Results</button>
+            </div>
+        </div>
+    </form>
+    <div class="container">
+        <div class="row">
+            <div id="result" style="border: 1px solid black;">
+
+            </div>
+        </div>
+    </div>
     </body>
 </html>
