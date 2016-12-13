@@ -8,7 +8,7 @@ $(document).ready(function() {
         //Javascript API Call to server to generate rows
         $.ajax({
             type: 'GET',
-            url: '/generate/' + num,
+            url: '/generate/' + num
         }).done(function(generateResponse) {
             console.log(generateResponse);
             //2nd Javascript API Call to server to get rows
@@ -23,4 +23,15 @@ $(document).ready(function() {
             });
         });
     });
+
+    $('#empty').on('click', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'GET',
+            url: '/empty'
+        }).done(function(emptyResponse){
+            console.log(emptyResponse);
+            $('#result').html('All Records Removed!');
+        });
+    })
 });

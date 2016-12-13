@@ -29,9 +29,32 @@ router.get('/people', function(req, res){
         if (err) {
             throw err;
         } else {
-            res.json(result);
+            /**
+             * Add SIN numbers
+             * http://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
+             * These won't be perfectly unique but as long as we have fewer than 2^31 items we should be OK
+             */
+            var peopleWithSin = [];
+            _.each(result, function(person) {
+                var key = person.gender + person.fName + person.lName + person.birthDay;
+                var hash = 0, i, chr, len;
+                for (i = 0, len = key.length; i < len; i++) {
+                    chr   = key.charCodeAt(i);
+                    hash  = ((hash << 5) - hash) + chr;
+                    hash |= 0; // Convert to 32bit integer
+                }
+                hash = Math.abs(hash); //no negative values
+                person.sin = hash + ''; //cast to String
+                peopleWithSin.push(person);
+            });
+            res.json(peopleWithSin);
         }
     });
+});
+
+router.get('/empty', function(req, res) {
+    db.collection('people').remove({});
+    res.json('removed!');
 });
 
 server.listen(80, "0.0.0.0", function(){
