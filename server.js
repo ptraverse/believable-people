@@ -4,7 +4,7 @@ var path = require('path');
 var router = express();
 var server = http.createServer(router);
 var _ = require('underscore');
-var g = require('./generate.js');
+var faker = require('./faker.js');
 var db = require('mongoskin').db('mongodb://localhost:27017/bp');
 
 router.use(express.static(path.resolve(__dirname, './public')));
@@ -15,29 +15,13 @@ router.param('num', function(req, res, next, num) {
     next();
 });
 router.get('/generate/:num', function(req, res){
-
-    /**
-     * g.generatePeople is not working properly yet
-     */
-    // g.generatePeople(req.num, function(err, people) {
-    //     if (err) {
-    //         res.json(err);
-    //     } else {
-    //         _.each(people, function(person) {
-    //             db.collection('people').insert(person);
-    //         });
-    //         res.json(people.length + ' people inserted!');
-    //     }
-    // });
-
-    numToInsert = req.num;
-    for (var i = 0; i < numToInsert; i++) {
-        g.generatePerson(numToInsert, function(err, person) {
-            db.collection('people').insert(person);
-        });
-    }
+    var people = faker.generatePeople(req.num);
+    var i = 0;
+    _.each(people, function(person) {
+        db.collection('people').insert(person);
+        i++;
+    });
     res.json(i + ' people inserted!');
-
 });
 
 router.get('/people', function(req, res){
