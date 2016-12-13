@@ -18,8 +18,7 @@ $(document).ready(function() {
             }).done(function(peopleResponse) {
                 console.log(peopleResponse);
                 $('#result').html('');
-                $('#result').append(JSON.stringify(peopleResponse));
-                console.log($('#result').html());
+                $('#result').append(JSON.stringify(peopleResponse, null, '\t'));
             });
         });
     });
