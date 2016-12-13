@@ -41,4 +41,15 @@ t2
 npm run 
 ```
 
+### A note about CSV files
+Excel saves CSV's with a ^M newline character. NOT the same as Dos new line... these can be fixed with substitution in vim:
+```
+:%s/\r/\r/g
+```
 
+
+### Test
+```
+mocha
+```
+<img src="/mocha-screenshot.png" />

@@ -10,6 +10,10 @@ var _randomFromFile = function(file) {
     return _.sample(lines, 1)[0].toLowerCase();
 };
 
+function _randomInt(min, max) {
+    return parseInt(Math.random() * (max - min)) + min;
+}
+
 var _fakeFirstName = function(gender) {
     var filename;
     if (gender == 'male') {
@@ -38,23 +42,19 @@ var _fakeGender = function() {
 };
 
 var _fakeBirthday = function() {
-    function getRandom(min, max) {
-        return (Math.random() * (max - min)) + min;
-    }
     var start = 29888269; // Dec 12 1970
     var end = 1481581069; // Dec 12 2016
-    var birthday = moment.unix(getRandom(start, end)).format('YYYY-MM-DD');
+    var birthday = moment.unix(_randomInt(start, end)).format('YYYY-MM-DD');
 
     return birthday;
 };
 
+
+
 var _fakeHouse = function() {
-    function getRandom(min, max) {
-        return (Math.random() * (max - min)) + min;
-    }
     var start = 1;
     var end = 9999;
-    var house = getRandom(start, end);
+    var house = _randomInt(start, end);
 
     return house;
 };
@@ -67,27 +67,73 @@ var _fakeCityAndProvince = function() {
     return _randomFromFile('./data/canadian_cities.csv');
 };
 
-var _fakeEmail = function() {
-    
+var _fakeAddress = function() {
+    var house = _fakeHouse();
+    var street = _fakeStreet();
+    var cityProvince = _fakeCityAndProvince();
+
+    return house + ' ' + street + ', ' + cityProvince;
+};
+
+/**
+ * randomly make a string that looks like an email
+ * Could be the first letter or the whole word of first and last name, maybe the birth year, maybe some special chars
+ */
+var _fakeEmail = function(firstName, lastName, birthday) {
+    var first = [
+        firstName,
+        firstName[0]
+    ];
+    var specialChars = [
+        '-',
+        '',
+        '.'
+    ];
+    var last = [
+        lastName,
+        lastName[0]
+    ];
+    var number = [
+        birthday.substring(0,4), //the full birthyear eg 1988
+        birthday.substring(2,4), //short form of birthyear eg 88
+        ''
+    ];
+    var provider = _randomFromFile('./data/email_providers.csv');
+    var fakeEmail = _.sample(first, 1);
+    fakeEmail += _.sample(specialChars,1);
+    fakeEmail += _.sample(last,1);
+    fakeEmail += _.sample(number,1);
+    fakeEmail += '@';
+    fakeEmail += provider;
+
+    return fakeEmail;
 };
 
 var _fakePhone = function() {
+    var areaCode = _randomFromFile('./data/area_codes.csv');
+    var firstPart = _randomInt(500,900);
+    var secondPart = _randomInt(1000,9999);
 
-};
-
-var _fakeSin = function() {
-
+    return areaCode + '-' + firstPart + '-' + secondPart;
 };
 
 var _generatePerson = function() {
     var gender = _fakeGender();
-    var name = _fakeFirstName(gender) + ' ' + _fakeLastName();
+    var fName = _fakeFirstName(gender);
+    var lName = _fakeLastName();
+    var name = fName + ' ' + lName;
     var birthday = _fakeBirthday();
+    var address = _fakeAddress();
+    var email = _fakeEmail(fName, lName, birthday);
+    var phone = _fakePhone();
 
     return {
         'gender': gender,
         'name': name,
-        'birthday': birthday
+        'birthday': birthday,
+        'address': address,
+        'email': email,
+        'phone': phone
     }
 };
 
@@ -118,6 +164,9 @@ module.exports = {
     fakeLastName: _fakeLastName,
     fakeGender: _fakeGender,
     fakeBirthday: _fakeBirthday,
+    fakeAddress: _fakeAddress,
+    fakeEmail: _fakeEmail,
+    fakePhone: _fakePhone,
     generatePerson: _generatePerson,
     generatePeople: _generatePeople,
     getPeople: _getPeople

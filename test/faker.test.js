@@ -13,6 +13,9 @@ it('can get a random entry from a CSV file', function(done) {
     var lname = faker.randomFromFile('./data/last_names.csv');
     assert(lname > '');
 
+    var street = faker.randomFromFile('./data/streets.csv');
+    assert(street > '');
+
     done();
 });
 
@@ -51,14 +54,43 @@ it('can generate a fake birthday', function(done) {
     done();
 });
 
+it('can generate a fake address', function(done) {
+    this.timeout(500);
+    var address = faker.fakeAddress();
+    assert(address > '');
 
+    done();
+});
+
+it('can generate a fake email', function(done) {
+    this.timeout(500);
+    var fName = faker.fakeFirstName(faker.fakeGender());
+    var lName = faker.fakeLastName();
+    var birthday = faker.fakeBirthday();
+    var email = faker.fakeEmail(fName, lName, birthday);
+    assert(email > '');
+
+    done();
+});
+
+it('can generate a fake phone', function(done) {
+    this.timeout(500);
+    var phone = faker.fakePhone();
+    assert(phone > '');
+
+    done();
+});
 
 it('can generate a person', function(done) {
     this.timeout(2000);
     var person = faker.generatePerson();
+    console.log(person);
     assert(person.gender == 'male' || person.gender == 'female');
     assert(person.name > '');
     assert(moment(person.birthday).isValid());
+    assert(person.address > '');
+    assert(person.email > '');
+    assert(person.phone > '');
 
     done();
 });
